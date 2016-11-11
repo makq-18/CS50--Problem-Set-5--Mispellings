@@ -1,0 +1,74 @@
+
+
+0.  an artifical long word said to mean a lung disease caused by inhaling very fine ash and sand dust.
+
+1.  getrusage() get resource usage function can be used to measure following three operations: 
+      * RUSAGE_SELF: Return resource usage statistics for calling process, 
+        which is the sum of resources used by all threads in the proces.
+      * RUSAGE_CHILDREN: Return resource usage statistics for all children,
+        grandchildren and further descendants that have terminated and waiting for.
+      * RUSAGE_THREAD: Return resource usage statistics for the calling thread.
+      
+
+2.  16 members.
+
+3.  Because, getrusage function is written in libraries 'sys/resource.h' and 'sys/time.h' 
+    but not inside program. So in order to access its variable which are inside header file
+    we are calling by reference but not by value.
+    
+4.  Okay, function's for loop is starting by varibale c is taking one 
+    character at a time from fie pointer fp till we reach end of the file.
+    Next, 
+    - if character is an alpha or apostrophe ' and my index is greater than 0 (meaning
+    I am not at first character of file), then assign that character to my array of
+    char varibale word at index location and increase my index by 1.
+        - if, length of my word is more than defined length of 45 then read the
+            characters untill I hit non-alpha character (\n end of line) and then
+            set my index to 0
+    - else if, I hit a character which is not alpha, then read the character
+      untill they are numeric and I reach end of file, and then set the index
+      to 0;
+    - else if, my index is greater than 0, and character is neither alpha
+      nor numerica then termiate the word and inside the word array at last
+      position i.e., index store \0 , and update the word counter by 1.
+    
+            Next, I am asking my before variable to measure resource usage of calling 
+            function. Then, check if word is correct and again measure resource usage.
+            From elements of before and after struct's I am calculating time taken
+            for by check function.
+            
+            Next, if my check function had returned true which means word is correct, 
+            then mispelled varible get assigned its opposite which is false. 
+            And vice-versa, and it will print that word and increement counter 
+            variable misspellings by 1.
+            
+            At last, after completion of loading, and checking my first word I am setting
+            my index to 0 again and starting to read next word, till I reached EOF in for
+            loop.
+    
+5.  Relying on fscanf alone to read string is bad idea, as we defined size of variable word as [length+1]
+    which is 46. And fscanf function does not check the length of string whereas reading one character
+    at a time can allow us to check. So, if fscanf read any string longer than 45 characters then it 
+    will store remaining characters into different memory location and bad things may happen.
+    
+6.  Declaring the paramater of check and load as const means I am saying to computer that my pointer can point
+    to other variable, value inside my object to which I am pointing cannot change.
+
+7.  I have implemented tries data structure to store all the words inside my dictionary.
+    Tries is implemented using a node structure containing one boolean variable and a array pointer of size 27 
+    (to point 26 alphabets and one apostrophe).
+    My hash function logic is very simple, I am converting each letter into lowercase, and then shiftiing it to 
+    zero index and storing as array hash code. New node is created on hash code array element and linked to 
+    previous node untill it reaches to last element of hash code and then it is making boolean variable check as true.
+    
+8.  First time I got when my spell checker started working as stated was more than a minute as 
+    I stored all dictionary words into a singly linked list. Though it took more than a minute to 
+    load all the words, I felt joy that I stored all the words :)
+    
+9.  I changed my logic of linking nodes which was initially done using three pointers. Next, I changed my
+    if conditions to check if character is an alphabet using isalpha function and tolower function to convert
+    character into lowercase. And to unload my nodes I used recursive function as a replacement for while loop.
+
+10. Yes, I can implement a much better hash function which can use less pointers compare to 27 pointers that 
+    I have used. I did my research to find hash functions online (as suggested by Dough lloyd) but I found them 
+    complicated to understand their logic and to synchronize in my code. 
